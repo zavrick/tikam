@@ -33,9 +33,12 @@ class StepOne extends React.Component {
       <div>
         {
           values &&
-            <Button type="primary" onClick={this.props.resume} style={{ marginBottom: 15 }}>RESUME last set</Button>
+            <div>
+              <Button type="primary" onClick={this.props.resume} style={{ marginBottom: 15 }}>RESUME last set</Button>
+              <hr/>
+            </div>
         }
-        <hr/>
+
         <h1>Set Board Size</h1>
         <Form>
           <Form.Item label="No. of Columns">

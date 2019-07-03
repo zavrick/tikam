@@ -70,7 +70,7 @@ class Card extends React.Component {
             borderRadius: 4,
             color: 'rgba(0,0,0,0.8)',
             height: `calc(100% - 1px)`,
-            fontSize: pctHeight,
+            fontSize: pctHeight * 1.5,
             padding: `${verticalPadding}px ${horizontalPadding}px`,
           }}
         >
