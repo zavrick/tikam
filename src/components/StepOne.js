@@ -16,6 +16,9 @@ class StepOne extends React.Component {
 
       const attributes = this.props.form.getFieldsValue();
 
+      localStorage.setItem('cols', attributes.cols);
+      localStorage.setItem('rows', attributes.rows);
+
       this.props.setColsAndRows(attributes.cols, attributes.rows);
 
       return true;
@@ -24,9 +27,15 @@ class StepOne extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const values = localStorage.getItem('values');
 
     return (
       <div>
+        {
+          values &&
+            <Button type="primary" onClick={this.props.resume} style={{ marginBottom: 15 }}>RESUME last set</Button>
+        }
+        <hr/>
         <h1>Set Board Size</h1>
         <Form>
           <Form.Item label="No. of Columns">
@@ -55,7 +64,7 @@ class StepOne extends React.Component {
           </Form.Item>
         </Form>
         <Button type="primary" onClick={this.handleSubmit}>
-          NEXT
+          NEW set
         </Button>
       </div>
     );

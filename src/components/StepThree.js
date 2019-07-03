@@ -5,7 +5,13 @@ import Card from './Card';
 
 class StepThree extends React.Component {
   getValue = (values, colIndex, rowIndex) => {
-    const { cols } = this.props;
+    const { cols, rows } = this.props;
+    const valuesIndex = this.getValuesIndex(rowIndex, colIndex, rows, cols);
+
+    return values[valuesIndex];
+  }
+
+  getValuesIndex = (rowIndex, colIndex, rows, cols) => {
     let valuesIndex = null;
 
     if (rowIndex > 0) {
@@ -14,7 +20,15 @@ class StepThree extends React.Component {
       valuesIndex = colIndex;
     }
 
-    return values[valuesIndex];
+    return valuesIndex;
+  }
+
+  handleLocalStorageFlipped = (valuesIndex) => e => {
+    let localFlipped = [];
+    if (localStorage.getItem('opened')) {
+      localFlipped = localStorage.getItem('opened').split(',').map(el => parseInt(el));
+    }
+    localStorage.setItem('opened', _.uniqBy(localFlipped.concat(valuesIndex), i => i));
   }
 
   renderRows = (count) => {
@@ -31,14 +45,20 @@ class StepThree extends React.Component {
   }
 
   renderRow = (rowIndex) => {
-    const { values, cols, rows } = this.props;
+    const { values, cols, rows, openedCards } = this.props;
 
     return _.times(cols, (colIndex) => {
+      const valuesIndex = this.getValuesIndex(rowIndex, colIndex, rows, cols);
+      const flipped = openedCards.indexOf(valuesIndex) > -1;
+
       return (
         <Card
           value={this.getValue(values, colIndex, rowIndex)}
           rows={rows}
           cols={cols}
+          flipped={flipped}
+          updateLocalStorageFlipped={this.handleLocalStorageFlipped(valuesIndex)}
+          key={valuesIndex}
         />
       );
     })
@@ -46,7 +66,7 @@ class StepThree extends React.Component {
 
   render() {
     const { rows } = this.props;
-    console.log(this.props.values)
+
     return (
       <div>
         {this.renderRows(rows)}

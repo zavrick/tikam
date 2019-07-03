@@ -6,7 +6,7 @@ class Card extends React.Component {
     super(props);
 
     this.state = {
-      isFlipped: false,
+      isFlipped: props.flipped,
     }
 
     this.handleClick = this.handleClick.bind(this);
@@ -14,7 +14,7 @@ class Card extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }), () => this.props.updateLocalStorageFlipped());
   }
 
   render() {

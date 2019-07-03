@@ -105,10 +105,10 @@ class StepTwo extends React.Component {
     if (!this.state.simpleMode) {
       const inputs = this.state.valueGroups.map((valueType) => {
         return (
-          <div style={{ marginBottom: 16 }}>
+          <div style={{ marginBottom: 16 }} key={valueType.id}>
             <span style={{ marginRight: 20 }}>
               <label>Value: </label>
-              <Input type="text" size="medium" placeholder="" onChange={this.handleAdvancedInputValueChange(valueType.id)}  style={{ width: 200 }} />
+              <Input type="text" size="default" placeholder="" onChange={this.handleAdvancedInputValueChange(valueType.id)}  style={{ width: 200 }} />
             </span>
             <span>
               <label>Quantity: </label>

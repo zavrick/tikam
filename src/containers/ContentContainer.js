@@ -16,6 +16,7 @@ class ContentContainer extends React.Component {
       values: [],
       step: 1,
       shuffledValues: [],
+      openedCards: [],
     }
   }
 
@@ -24,6 +25,10 @@ class ContentContainer extends React.Component {
       this.setState({
         step: this.state.step + 1,
         shuffledValues: _.shuffle(this.state.values),
+        openedCards: [],
+      }, () => {
+        localStorage.setItem('values', this.state.shuffledValues);
+        localStorage.setItem('opened', []);
       });
     } else {
       this.setState({
@@ -32,9 +37,22 @@ class ContentContainer extends React.Component {
     }
   }
 
+  handleResume = () => {
+    this.setState({
+      shuffledValues: localStorage.getItem('values').split(","),
+      rows: localStorage.getItem('rows'),
+      cols: localStorage.getItem('cols'),
+      openedCards: localStorage.getItem('opened').split(",").map(el => parseInt(el)),
+    }, () => {
+      this.setState({
+        step: 3,
+      })
+    });
+  }
+
   render() {
     if (this.state.step === 1) {
-      return <StepOne setColsAndRows={(cols, rows) => this.setState({ cols, rows }, () => this.handleNextStep())} />;
+      return <StepOne setColsAndRows={(cols, rows) => this.setState({ cols, rows }, () => this.handleNextStep())} resume={this.handleResume} />;
     }
 
     if (this.state.step === 2) {
@@ -42,7 +60,7 @@ class ContentContainer extends React.Component {
     }
 
     if (this.state.step === 3) {
-      return <StepThree cols={this.state.cols} rows={this.state.rows} values={this.state.shuffledValues} />
+      return <StepThree cols={this.state.cols} rows={this.state.rows} values={this.state.shuffledValues} openedCards={this.state.openedCards} />
     }
 
     return (
