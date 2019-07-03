@@ -19,23 +19,26 @@ class ContentContainer extends React.Component {
     }
   }
 
-  componentDidMount = () => {
-    this.setState({ shuffledValues: _.shuffle(this.state.values) });
-  }
-
   handleNextStep = () => {
-    this.setState({
-      step: this.state.step + 1,
-    });
+    if (this.state.step + 1 === 3 && this.state.shuffledValues.length === 0) {
+      this.setState({
+        step: this.state.step + 1,
+        shuffledValues: _.shuffle(this.state.values),
+      });
+    } else {
+      this.setState({
+        step: this.state.step + 1,
+      });
+    }
   }
 
   render() {
     if (this.state.step === 1) {
-      return <StepOne nextStep={this.handleNextStep} setColsAndRows={(cols, rows) => this.setState({ cols, rows })} />;
+      return <StepOne setColsAndRows={(cols, rows) => this.setState({ cols, rows }, () => this.handleNextStep())} />;
     }
 
     if (this.state.step === 2) {
-      return <StepTwo nextStep={this.handleNextStep} setValues={(values) => this.setState({ values })} valuesCount={this.state.rows * this.state.cols} />;
+      return <StepTwo setValues={(values) => this.setState({ values }, () => this.handleNextStep())} valuesCount={this.state.rows * this.state.cols} />;
     }
 
     if (this.state.step === 3) {

@@ -46,7 +46,7 @@ class StepThree extends React.Component {
 
   render() {
     const { rows } = this.props;
-
+    console.log(this.props.values)
     return (
       <div>
         {this.renderRows(rows)}

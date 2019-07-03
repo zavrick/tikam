@@ -17,7 +17,6 @@ class StepOne extends React.Component {
       const attributes = this.props.form.getFieldsValue();
 
       this.props.setColsAndRows(attributes.cols, attributes.rows);
-      this.props.nextStep();
 
       return true;
     });

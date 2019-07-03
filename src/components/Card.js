@@ -18,7 +18,7 @@ class Card extends React.Component {
   }
 
   render() {
-    const { rows, cols } = this.props;
+    const { rows, cols, value } = this.props;
     const pctWidth = Math.floor(100/cols);
     const pctHeight = Math.floor(100/rows);
     const margin = Math.floor(Math.min(50/rows, 50/cols)) || 5;
@@ -74,7 +74,7 @@ class Card extends React.Component {
             padding: `${verticalPadding}px ${horizontalPadding}px`,
           }}
         >
-          {this.props.value}
+          {value}
         </div>
       </ReactCardFlip>
     );
